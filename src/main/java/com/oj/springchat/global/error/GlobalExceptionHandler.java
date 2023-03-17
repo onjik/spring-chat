@@ -1,5 +1,7 @@
 package com.oj.springchat.global.error;
 
+import com.oj.springchat.domain.member.exception.OccupiedEmailException;
+import com.oj.springchat.domain.member.exception.OccupiedMemberPropertyException;
 import com.oj.springchat.global.error.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -70,15 +72,23 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response,HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(OccupiedMemberPropertyException.class)
+    protected ResponseEntity<ErrorResponse> handleSignUpWithOccupiedException(OccupiedMemberPropertyException e){
+        ErrorCode errorCode = e.getErrorCode();
+        log.error("handleOccupiedMemberPropertyException",e);
+        ErrorResponse response = ErrorResponse.of(errorCode);
+        return new ResponseEntity<>(response,errorCode.getStatus());
+    }
+
     /**
-     * 비즈니스 로직상 발생하는 Exception
+     * 위에서 처리 되지 않은 비즈니스 로직상 발생하는 Exception
      */
     @ExceptionHandler(BusinessException.class)
     protected ResponseEntity<ErrorResponse> handleBusinessException(BusinessException e){
         log.error("handleBusinessException",e);
         ErrorCode errorCode = e.getErrorCode();
         ErrorResponse response = ErrorResponse.of(errorCode);
-        return new ResponseEntity<>(response,HttpStatus.valueOf(errorCode.getStatus()));
+        return new ResponseEntity<>(response,errorCode.getStatus());
     }
 
     /**

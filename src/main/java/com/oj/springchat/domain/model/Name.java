@@ -7,6 +7,7 @@ import jakarta.validation.constraints.NotEmpty;
 import lombok.*;
 
 
+
 @Getter
 @ToString(of = {"firstName", "middleName" , "lastName"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
@@ -38,5 +39,9 @@ public class Name {
             return String.format("%s %s",this.firstName, this.lastName);
         }
         return String.format("%s %s %s",this.firstName, this.middleName,this.lastName);
+    }
+
+    public String toString(){
+        return getFullName();
     }
 }

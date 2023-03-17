@@ -3,6 +3,7 @@ package com.oj.springchat.global.error;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -20,20 +21,20 @@ import java.util.stream.Collectors;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class ErrorResponse {
     private String message;
-    private int status;
+    private String status;
     private List<FieldError> errors;
     private String code;
 
     private ErrorResponse(ErrorCode code, List<FieldError> errors){
         this.message = code.getMessage();
-        this.status = code.getStatus();
+        this.status = code.getStatus().toString();
         this.errors = errors;
         this.code = code.getCode();
     }
 
     private ErrorResponse(ErrorCode code){
         this.message = code.getMessage();
-        this.status = code.getStatus();
+        this.status = code.getStatus().toString();
         this.errors = new ArrayList<>(); //if errors is null, response empty list instead of null
         this.code = code.getCode();
     }

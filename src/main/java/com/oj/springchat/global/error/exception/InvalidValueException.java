@@ -8,10 +8,10 @@ import com.oj.springchat.global.error.ErrorCode;
  * 쿠폰 만료, 아이디 중복 등
  */
 public class InvalidValueException extends BusinessException{
-    public InvalidValueException(String value) {
+    protected InvalidValueException(String value) {
         super(value, ErrorCode.INVALID_INPUT_VALUE);
     }
-    public InvalidValueException(String value, ErrorCode errorCode){
+    protected InvalidValueException(String value, ErrorCode errorCode){
         super(value, errorCode);
     }
 }
