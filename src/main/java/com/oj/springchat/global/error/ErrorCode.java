@@ -14,8 +14,8 @@ public enum ErrorCode {
     ENTITY_NOT_FOUND(HttpStatus.NOT_FOUND,"C006","Entity Not Found" ),
 
     //DB
-    OCCUPIED_EMAIL(HttpStatus.CONFLICT,"D001","Sign up With Occupied Email"),
-    OCCUPIED_NICKNAME(HttpStatus.CONFLICT,"D002","Sign up With Occupied Nickname");
+    UNIQUE_CONSTRAINT(HttpStatus.CONFLICT,"D001","Database Unique Constraint Violation");
+
 
 
     private String message;

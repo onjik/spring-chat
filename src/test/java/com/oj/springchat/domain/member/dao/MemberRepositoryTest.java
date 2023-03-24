@@ -31,17 +31,8 @@ class MemberRepositoryTest extends RepositoryTest {
     @DisplayName("save")
     public void saveTest(){
         //given
-        Email testEmail = Email.of("test@a.a");
-        Name testName = Name.builder().firstName("testFirst").lastName("testLast").build();
-        Authority testAuthority = Authority.ROLE_USER;
-        String testPassword = "testPw1234";
 
-        Member testMember = Member.builder()
-                .authority(testAuthority)
-                .email(testEmail)
-                .name(testName)
-                .password(testPassword)
-                .build();
+        Member testMember = MemberTestUtil.createNewTestMember();
 
         //when
         assertDoesNotThrow(() -> memberRepository.save(testMember));

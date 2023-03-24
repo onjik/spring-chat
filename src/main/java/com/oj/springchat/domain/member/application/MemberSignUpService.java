@@ -6,8 +6,7 @@ import com.oj.springchat.domain.member.domain.Authority;
 import com.oj.springchat.domain.member.domain.Member;
 import com.oj.springchat.domain.member.domain.MemberConstant;
 import com.oj.springchat.domain.member.dto.SignUpRequest;
-import com.oj.springchat.domain.member.exception.OccupiedEmailException;
-import com.oj.springchat.domain.member.exception.OccupiedNickNameException;
+import com.oj.springchat.global.error.exception.UniqueConstraintException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,7 +27,7 @@ public class MemberSignUpService {
      * @param dto : SignUpRequest
      * @return : a registered member
      *
-     * @throws OccupiedEmailException : sign up with occupied Email
+     * @throws UniqueConstraintException : sign up with occupied Email
      * @throws DataIntegrityViolationException : If an  unchecked data integrity violation occurs
      */
     public Member doSignUp(SignUpRequest dto){
@@ -41,9 +40,17 @@ public class MemberSignUpService {
             String message = e.getMessage().toUpperCase();
             //if DataIntegrityViolation is caused by "Sign up with occupied email"
             if (message.contains(MemberConstant.Constraint.EMAIL_UNIQUE_VIOLATION.toUpperCase())){
-                throw new OccupiedEmailException(dto.getEmail());
+                throw UniqueConstraintException.of(
+                        "member",
+                        MemberConstant.ColumnName.EMAIL,
+                        dto.getEmail().toString()
+                );
             } else if (message.contains(MemberConstant.Constraint.NICKNAME_UNIQUE_VIOLATION.toUpperCase())) {
-                throw new OccupiedNickNameException(dto.getNickName());
+                throw UniqueConstraintException.of(
+                        "member",
+                        MemberConstant.ColumnName.NICKNAME,
+                        dto.getNickname()
+                );
             } else {
                 throw e;
             }

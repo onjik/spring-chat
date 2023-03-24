@@ -1,5 +1,6 @@
 package com.oj.springchat.global.error;
 
+import com.oj.springchat.global.error.exception.UniqueConstraintException;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -51,6 +52,10 @@ public class ErrorResponse {
         String value = e.getValue() == null ? "" : e.getValue().toString();
         List<FieldError> errors = FieldError.of(e.getName(), value, e.getErrorCode());
         return new ErrorResponse(ErrorCode.INVALID_TYPE_VALUE,errors);
+    }
+
+    public static ErrorResponse of(UniqueConstraintException e){
+        return new ErrorResponse(e.getErrorCode(),e.getFieldErrors());
     }
 
 
