@@ -1,7 +1,6 @@
 package com.oj.springchat.global.error;
 
-import com.oj.springchat.domain.member.exception.OccupiedEmailException;
-import com.oj.springchat.domain.member.exception.OccupiedMemberPropertyException;
+import com.oj.springchat.global.error.exception.UniqueConstraintException;
 import com.oj.springchat.global.error.exception.BusinessException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -72,12 +71,11 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(response,HttpStatus.FORBIDDEN);
     }
 
-    @ExceptionHandler(OccupiedMemberPropertyException.class)
-    protected ResponseEntity<ErrorResponse> handleSignUpWithOccupiedException(OccupiedMemberPropertyException e){
-        ErrorCode errorCode = e.getErrorCode();
+    @ExceptionHandler(UniqueConstraintException.class)
+    protected ResponseEntity<ErrorResponse> handleSignUpWithOccupiedException(UniqueConstraintException e){
         log.error("handleOccupiedMemberPropertyException",e);
-        ErrorResponse response = ErrorResponse.of(errorCode);
-        return new ResponseEntity<>(response,errorCode.getStatus());
+        ErrorResponse response = ErrorResponse.of(e);
+        return new ResponseEntity<>(response,e.getErrorCode().getStatus());
     }
 
     /**

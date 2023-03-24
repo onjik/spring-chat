@@ -78,7 +78,7 @@ public class Member {
         return Member.builder()
                 .email(request.getEmail())
                 .name(request.getName())
-                .nickname(request.getNickName())
+                .nickname(request.getNickname())
                 .authority(authority)
                 .password(encodedPassword)
                 .build();
