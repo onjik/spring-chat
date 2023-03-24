@@ -9,7 +9,6 @@ import lombok.*;
 
 
 @Getter
-@ToString(of = {"firstName", "middleName" , "lastName"})
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Embeddable
 public class Name {
