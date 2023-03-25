@@ -19,7 +19,7 @@ on:
       - 'feature/*'
       - 'main'
       
-permissions: read-all|write-all
+permissions: write-all
 
 jobs:
   build: 
