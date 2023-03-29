@@ -14,7 +14,6 @@ class MemberTestUtilTest {
         assertEquals(signUpRequest.getEmail(),MemberTestUtil.testEmail);
         assertEquals(signUpRequest.getPassword(),MemberTestUtil.testPassword);
         assertEquals(signUpRequest.getNickname(),MemberTestUtil.testNickname);
-        assertEquals("a","differ"); //git hub action test를 위해 일부러 틀린 테스트 작성
     }
 
 }
